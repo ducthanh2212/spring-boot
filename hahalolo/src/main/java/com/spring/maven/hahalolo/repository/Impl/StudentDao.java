@@ -2,10 +2,9 @@ package com.spring.maven.hahalolo.repository.Impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import com.spring.maven.hahalolo.model.Student;
@@ -13,21 +12,21 @@ import com.spring.maven.hahalolo.repository.IStudentDao;
 
 @Repository
 public class StudentDao implements IStudentDao {
-
+	private static Logger logger = LogManager.getLogger(StudentDao.class);
+	
 	public static List<Student> lstStudent = null;
-	public static Logger log = null;
+
 	static {
-		lstStudent = new ArrayList<>();
-		log = Logger.getLogger(StudentDao.class.getName());
+		lstStudent = new ArrayList<>();		
 	}
 
 	@Override
 	public Student adList(Student student) {
 		try {
-			log.log(java.util.logging.Level.INFO, "Truoc khi them" + student);
+			logger.info("Ghi log trước khi thêm "+student);
 			lstStudent.add(student);
 		} catch (Exception e) {
-			log.log(java.util.logging.Level.WARNING, e.toString());
+			logger.warn("Lỗi thêm dữ liệu student "+e.toString());
 			e.printStackTrace();
 		}
 		return student;
@@ -36,9 +35,9 @@ public class StudentDao implements IStudentDao {
 	@Override
 	public List<Student> getList() {
 		try {
-			log.log(java.util.logging.Level.INFO, "Lay danh sach" + lstStudent);
+			logger.info("Ghi log khi lấy dữ liệu "+lstStudent);
 		} catch (Exception e) {
-			log.log(java.util.logging.Level.WARNING, "Loi" + e);
+			logger.warn("Lỗi lấy dữ liệu student "+e.toString());
 			e.printStackTrace();
 		}
 		return lstStudent;
